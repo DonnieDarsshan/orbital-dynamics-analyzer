@@ -11,60 +11,88 @@ body{
   color:#e5e7eb;
   font-family:Arial,sans-serif;
   padding:20px;
+  font-size:16px;
 }
 
 /* controls */
-select,button,input[type="checkbox"],input[type="radio"],input.note{
+select,
+button,
+input[type="checkbox"],
+input[type="radio"],
+input.note{
   background:#020617;
   color:#e5e7eb;
   border:1px solid #334155;
-  padding:4px;
+  padding:6px;
+  font-size:16px;
+  font-weight:600;
 }
 
 /* tables */
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:12px;
+  margin-top:14px;
 }
-th,td{
+
+th{
+  background:#020617;
+  font-size:17px;
+  font-weight:700;
+}
+
+td{
   border:1px solid #334155;
-  padding:6px;
+  padding:8px;
   text-align:center;
-  font-size:14px;
+  font-size:16px;
+  font-weight:600;
 }
-th{background:#020617;}
-.deg-disabled{opacity:.4;pointer-events:none;}
-.gap-row td{border:none;height:12px;}
+
+.deg-disabled{
+  opacity:.4;
+  pointer-events:none;
+}
+
+.gap-row td{
+  border:none;
+  height:16px;
+}
 
 /* note rows */
-.note-row td{background:#020617;}
+.note-row td{
+  background:#020617;
+}
 
 /* note input */
 .note{
   width:100%;
   box-sizing:border-box;
   text-align:center;
-  font-size:14px;
+  font-size:16px;
+  font-weight:600;
 }
 
 /* BAD row */
 tr.note-row.bad-row td{
   color:#ef4444 !important;
-  font-weight:bold !important;
+  font-weight:700 !important;
   background:#1a0000 !important;
 }
+
 tr.note-row.bad-row .note{
   background:#1a0000 !important;
   color:#ef4444 !important;
-  font-weight:bold !important;
+  font-weight:700 !important;
   border-color:#7f1d1d !important;
 }
+
 .bad-label{
   color:#ef4444 !important;
-  font-weight:bold !important;
+  font-weight:700 !important;
 }
 </style>
+
 </head>
 
 <body>
@@ -103,8 +131,8 @@ tr.note-row.bad-row .note{
 <thead>
 <tr>
   <th>No</th><th>Lord</th>
-  <th>Jup</th><th>Sat</th><th>Bud</th><th>Ket</th>
-  <th>Ven</th><th>Sun</th><th>Moo</th><th>Mar</th><th>Rah</th>
+  <th>Guru</th><th>Shani</th><th>Budha</th><th>Ketu</th>
+  <th>Venus</th><th>Surya</th><th>Chandra</th><th>Mangala</th><th>Rahu</th>
 </tr>
 </thead>
 <tbody id="matrixTable"></tbody>
@@ -114,6 +142,19 @@ tr.note-row.bad-row .note{
 const SIGNS=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
 const ALL_PLANETS=["Lagna","Sun","Moo","Mar","Rah","Jup","Sat","Bud","Ket","Ven"];
 const COL_PLANETS=["Jup","Sat","Bud","Ket","Ven","Sun","Moo","Mar","Rah"];
+
+const DISPLAY_NAMES={
+  Sun:"Surya",
+  Moo:"Chandra",
+  Mar:"Mangala",
+  Rah:"Rahu",
+  Jup:"Guru",
+  Sat:"Shani",
+  Bud:"Budha",
+  Ket:"Ketu",
+  Ven:"Venus",
+  Lagna:"Lagna"
+};
 
 const data={};
 ALL_PLANETS.forEach(p=>data[p]={sign:"",degree:"",out:"",retro:(p==="Rah"||p==="Ket")});
@@ -174,7 +215,7 @@ function buildPlanetTable(){
   ALL_PLANETS.forEach(p=>{
     planetTable.innerHTML+=`
     <tr>
-      <td>${p}</td>
+      <td>${DISPLAY_NAMES[p]}</td>
       <td>${p==="Lagna"?"":`<input type="checkbox" data-p="${p}" ${data[p].retro?"checked":""}>`}</td>
       <td><select data-p="${p}" data-t="sign"><option></option>${SIGNS.map(s=>`<option>${s}</option>`).join("")}</select></td>
       <td><select data-p="${p}" data-t="deg"><option></option>${Array.from({length:30},(_,i)=>`<option>${i}</option>`).join("")}</select></td>
@@ -207,7 +248,7 @@ function noteRow(isBad=false,rowIndex){
     <td></td>
     ${COL_PLANETS.map((_,i)=>`
       <td>
-        <input class="note ${isBad?'bad-note':''}"
+        <input class="note"
                data-note="${rowIndex}-${i}"
                value="${notes[rowIndex]?.[i]||''}">
       </td>
