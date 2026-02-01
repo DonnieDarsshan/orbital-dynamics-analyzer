@@ -5,93 +5,223 @@
 <title>Astrology Relation Tool</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+
+
 <style>
+/* =========================================================
+   DEEPEST BLUE ASTROLOGY THEME (NIGHT SKY)
+   ========================================================= */
+
+:root{
+  --bg-main:
+    radial-gradient(circle at top,#020617 0%,#00030a 70%);
+  --panel:#020617;
+  --border:#1e40af;          /* deep indigo blue */
+  --soft:#0f172a;
+  --text:#e5edff;            /* pale blue white */
+  --accent:#2563eb;          /* royal blue */
+  --danger:#b91c1c;          /* warning red */
+  --glow:0 0 12px rgba(37,99,235,.35);
+}
+
 body{
-  background:#0f172a;
-  color:#e5e7eb;
-  font-family:Arial,sans-serif;
+  background:var(--bg-main);
+  color:var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
   padding:20px;
   font-size:16px;
 }
 
-/* controls */
+
+
+*{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   CONTROLS
+   =============================== */
 select,
 button,
 input[type="checkbox"],
 input[type="radio"],
 input.note{
-  background:#020617;
-  color:#e5e7eb;
-  border:1px solid #334155;
+  background:linear-gradient(180deg,#020617,#02030f);
+  color:var(--text);
+  border:1px solid var(--border);
   padding:6px;
   font-size:16px;
-  font-weight:600;
+  font-weight:700;
+  box-shadow:none;
 }
 
-/* tables */
+button:hover{
+  background:linear-gradient(180deg,#020b2a,#020617);
+  cursor:pointer;
+}
+
+/* ===============================
+   TABLES
+   =============================== */
 table{
   width:100%;
   border-collapse:collapse;
   margin-top:14px;
+  background:var(--panel);
+  box-shadow:0 0 24px rgba(0,0,0,.7);
 }
 
+/* ===============================
+   HEADER ROWS
+   =============================== */
 th{
-  background:#020617;
-  font-size:17px;
-  font-weight:700;
+  background:
+    linear-gradient(180deg,#020b2a,#020617);
+  font-size:22px;
+  font-weight:900;
+  color:#e5edff;
+  border:1px solid var(--border);
+  text-shadow:none;
+  padding:14px 8px;
+  letter-spacing:.5px;
 }
 
+/* ===============================
+   DATA CELLS
+   =============================== */
 td{
-  border:1px solid #334155;
+  line-height:1.0;
+  border:1px solid var(--border);
   padding:8px;
   text-align:center;
   font-size:16px;
-  font-weight:600;
+  font-weight:700;
+  background:
+    linear-gradient(180deg,#020617,#00030a);
 }
 
+/* ===============================
+   DISABLED DEGREE
+   =============================== */
 .deg-disabled{
-  opacity:.4;
+  opacity:.35;
   pointer-events:none;
 }
 
+/* ===============================
+   GAP ROW
+   =============================== */
 .gap-row td{
   border:none;
   height:16px;
+  background:transparent;
 }
 
-/* note rows */
+/* ===============================
+   NOTE ROWS
+   =============================== */
 .note-row td{
-  background:#020617;
+  background:
+    linear-gradient(180deg,#020b2a,#020617);
 }
 
-/* note input */
 .note{
   width:100%;
   box-sizing:border-box;
   text-align:center;
   font-size:16px;
-  font-weight:600;
+  font-weight:800;
+  background:transparent;
+  color:#e5edff;
+  border:none;
 }
 
-/* BAD row */
+/* ===============================
+   BAD ROW (RED WARNING)
+   =============================== */
 tr.note-row.bad-row td{
-  color:#ef4444 !important;
-  font-weight:700 !important;
-  background:#1a0000 !important;
+  color:#fecaca !important;
+  font-weight:800 !important;
+  padding:8px !important;
+  background:
+    linear-gradient(180deg,#3b0f14,#22070b) !important;
+  box-shadow:none !important;
 }
 
 tr.note-row.bad-row .note{
-  background:#1a0000 !important;
-  color:#ef4444 !important;
-  font-weight:700 !important;
-  border-color:#7f1d1d !important;
+  background:transparent !important;
+  color:#fecaca !important;
+  font-weight:800 !important;
+  border:none !important;
+  box-shadow:none !important;
+  padding:0 !important;
 }
 
 .bad-label{
-  color:#ef4444 !important;
-  font-weight:700 !important;
+  color:#fecaca !important;
+  font-weight:800 !important;
+  text-shadow:none !important;
+}
+
+/* ===============================
+   HEADINGS
+   =============================== */
+h2{
+  color:#bfdbfe;
+  text-shadow:none;
+  border-bottom:2px solid var(--border);
+  padding-bottom:6px;
+  margin-top:26px;
+}
+
+/* ===============================
+   CHECKBOX / RADIO ACCENT
+   =============================== */
+input[type="checkbox"],
+input[type="radio"]{
+  accent-color:#2563eb;
+}
+
+/* ===============================
+   SCROLLBAR
+   =============================== */
+::-webkit-scrollbar{
+  width:10px;
+}
+::-webkit-scrollbar-track{
+  background:#00030a;
+}
+::-webkit-scrollbar-thumb{
+  background:#020b2a;
+  border-radius:8px;
+  border:1px solid #1e40af;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
 
 </head>
 
@@ -103,12 +233,15 @@ tr.note-row.bad-row .note{
   <label><input type="checkbox" id="ignoreDegrees"> Ignore Degrees</label>
   <label><input type="radio" name="houseSys" value="KP" checked> KP</label>
   <label><input type="radio" name="houseSys" value="Vedic"> Vedic</label>
+  <label><input type="radio" name="houseSys" value="Sign"> Sign-to-Sign</label>
+
   <button id="clearBtn">Clear All</button>
   <button id="saveBtn">Save</button>
   <button id="loadBtn">Load</button>
-  <button id="exportPDF">Export PDF</button>
-  <button id="exportJPG">Export JPG</button>
+  <button id="loadSwissBtn">Load Swiss</button>
   <input type="file" id="fileInput" hidden accept=".json">
+  <input type="file" id="swissFileInput" hidden accept=".json">
+
 </div>
 
 <table>
@@ -125,23 +258,48 @@ tr.note-row.bad-row .note{
 <div>
   Lagna:
   <select id="lagnaSelect"></select>
+  
+  
+  <label style="margin-left:12px;">
+  <input type="checkbox" id="lagnaBasedChk" checked> Lagna Based
+</label>
+<label style="margin-left:8px;">
+  <input type="checkbox" id="moonBasedChk"> Moon Based
+</label>
+
+
+
 </div>
 
 <table>
+
+
 <thead>
-<tr>
-  <th>No</th><th>Lord</th>
-  <th>Guru</th><th>Shani</th><th>Budha</th><th>Ketu</th>
-  <th>Venus</th><th>Surya</th><th>Chandra</th><th>Mangala</th><th>Rahu</th>
+<tr id="matrixHeader">
+  <th>No</th>
+  <th>Lord</th>
 </tr>
 </thead>
+
+
 <tbody id="matrixTable"></tbody>
 </table>
 
 <script>
 const SIGNS=["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
 const ALL_PLANETS=["Lagna","Sun","Moo","Mar","Rah","Jup","Sat","Bud","Ket","Ven"];
-const COL_PLANETS=["Jup","Sat","Bud","Ket","Ven","Sun","Moo","Mar","Rah"];
+const NON_RETRO_PLANETS = ["Sun","Moo","Lagna"];
+
+// Vimshottari Dasha Order
+const BASE_COL_PLANETS=["Ket","Ven","Sun","Moo","Mar","Rah","Jup","Sat","Bud"];
+const BAD_HOUSES = [2,6,8,12];
+const GROUP_A_PLANETS = ["Sun","Mar","Sat","Rah","Ket"];
+const GROUP_B_PLANETS = ["Moo","Jup","Bud","Ven"];
+
+
+let CURRENT_COL_PLANETS = [...BASE_COL_PLANETS];
+
+
 
 const DISPLAY_NAMES={
   Sun:"Surya",
@@ -156,11 +314,50 @@ const DISPLAY_NAMES={
   Lagna:"Lagna"
 };
 
+
+/* ===============================
+   NAKSHATRA → STAR LORD (KP)
+   =============================== */
+const NAKSHATRA_LORDS = [
+  "Ket","Ven","Sun","Moo","Mar","Rah","Jup","Sat","Bud",
+  "Ket","Ven","Sun","Moo","Mar","Rah","Jup","Sat","Bud",
+  "Ket","Ven","Sun","Moo","Mar","Rah","Jup","Sat","Bud"
+];
+
+function getStarLord(planet){
+  if(!data[planet].sign) return null;
+  const deg = Number(data[planet].degree || 0);
+  const signIndex = SIGNS.indexOf(data[planet].sign);
+  if(signIndex < 0) return null;
+
+  const abs = signIndex * 30 + deg;
+  const nak = Math.floor(abs / (13 + 1/3)); // 13°20'
+  return NAKSHATRA_LORDS[nak];
+}
+
+
+
+
+
+
 const data={};
-ALL_PLANETS.forEach(p=>data[p]={sign:"",degree:"",out:"",retro:(p==="Rah"||p==="Ket")});
+
+ALL_PLANETS.forEach(p=>{
+  data[p]={
+    sign:"",
+    degree:"",
+    out:"",
+    retro:(p==="Rah"||p==="Ket")
+  };
+});
+
+
 
 let notes=[];
 let houseSystem="KP";
+
+let manualLagnaOverride = false;
+
 
 const LAGNA_LORDS={
 Aries:["Mar","Ven","Bud","Moo","Sun","Bud","Ven","Mar","Jup","Sat","Sat","Jup"],
@@ -178,6 +375,25 @@ Pisces:["Jup","Mar","Ven","Bud","Moo","Sun","Bud","Ven","Mar","Jup","Sat","Sat"]
 };
 
 const lagnaSelect=document.getElementById("lagnaSelect");
+
+const lagnaBasedChk = document.getElementById("lagnaBasedChk");
+const moonBasedChk  = document.getElementById("moonBasedChk");
+
+lagnaBasedChk.onchange = () => {
+  if(!lagnaBasedChk.checked) lagnaBasedChk.checked = true;
+  moonBasedChk.checked = false;
+  buildMatrix();
+};
+
+moonBasedChk.onchange = () => {
+  if(!moonBasedChk.checked) moonBasedChk.checked = true;
+  lagnaBasedChk.checked = false;
+  buildMatrix();
+};
+
+
+
+
 SIGNS.forEach(s=>lagnaSelect.innerHTML+=`<option>${s}</option>`);
 
 const planetTable=document.getElementById("planetTable");
@@ -191,24 +407,160 @@ function absPos(p){
   return SIGNS.indexOf(data[p].sign)*30+deg;
 }
 
+function signPos(p){
+  if(!data[p].sign) return null;
+  return SIGNS.indexOf(data[p].sign);
+}
+
+
+
+
+function getEffectiveLagnaSign(){
+  if(!data.Lagna.sign) return null;
+
+  const deg = Number(data.Lagna.degree || 0);
+  let signIndex = SIGNS.indexOf(data.Lagna.sign);
+
+  if(deg >= 15){
+    signIndex = (signIndex + 1) % 12;
+  }
+
+  return SIGNS[signIndex];
+}
+
+
+
+
+
+
+
+
 function calcHouse(diff){
-  let h=houseSystem==="Vedic"
-    ?Math.floor((diff+15)/30)+1
-    :Math.floor(diff/30)+1;
-  if(h>12) h-=12;
+  if(houseSystem==="Sign"){
+    let h = diff + 1;
+    if(h > 12) h -= 12;
+    return h;
+  }
+
+  let h = houseSystem==="Vedic"
+    ? Math.floor((diff + 15) / 30) + 1
+    : Math.floor(diff / 30) + 1;
+
+  if(h > 12) h -= 12;
   return h;
 }
 
-function recalcOutputs(){
-  const lagnaAbs=absPos("Lagna");
-  ALL_PLANETS.forEach(p=>{
-    data[p].out="";
-    if(!data[p].sign||lagnaAbs==null) return;
-    let diff=absPos(p)-lagnaAbs;
-    if(diff<0) diff+=360;
-    data[p].out=calcHouse(diff);
-  });
+
+
+function getMatrixHouse(rowPlanet, colPlanet){
+
+  // 1️⃣ Try KP / Vedic if not Sign mode
+  if(houseSystem !== "Sign"){
+    const a = absPos(rowPlanet);
+    const b = absPos(colPlanet);
+
+    if(a != null && b != null){
+      let diff = data[rowPlanet].retro ? a - b : b - a;
+      if(diff < 0) diff += 360;
+      return calcHouse(diff);
+    }
+  }
+
+  // 2️⃣ FALLBACK → Sign-to-Sign (ALWAYS)
+  const sa = signPos(rowPlanet);
+  const sb = signPos(colPlanet);
+
+  if(sa == null || sb == null) return null; // only possible if sign itself missing
+
+  let diff = data[rowPlanet].retro ? sa - sb : sb - sa;
+  if(diff < 0) diff += 12;
+  return diff + 1;
 }
+
+
+
+
+
+
+
+
+
+function recalcOutputs(){
+
+
+
+
+
+
+  /* ===== SIGN TO SIGN MODE ===== */
+ 
+ 
+ if(houseSystem === "Sign"){
+  const lagnaSign = data.Lagna.sign
+    ? SIGNS.indexOf(data.Lagna.sign)
+    : null;
+
+  ALL_PLANETS.forEach(p=>{
+    data[p].out = "";
+
+    if(p === "Lagna"){
+      data[p].out = 1;
+      return;
+    }
+
+    if(!data[p].sign || lagnaSign == null) return;
+
+    let diff = signPos(p) - lagnaSign;
+    if(diff < 0) diff += 12;
+
+    data[p].out = diff + 1;
+  });
+
+  return;
+}
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+  /* ===== KP / VEDIC MODE ===== */
+	let lagnaAbs = absPos("Lagna");
+
+
+
+	ALL_PLANETS.forEach(p=>{
+	  data[p].out="";
+
+	  if(p === "Lagna"){
+		data[p].out = 1;
+		return;
+	  }
+
+	  if(!data[p].sign || lagnaAbs == null) return;
+
+	  let diff = absPos(p) - lagnaAbs;
+	  if(diff < 0) diff += 360;
+
+	  data[p].out = calcHouse(diff);
+	});
+
+  
+  
+  
+  
+}
+
+
+
+
+
+
+
 
 function buildPlanetTable(){
   planetTable.innerHTML="";
@@ -216,7 +568,14 @@ function buildPlanetTable(){
     planetTable.innerHTML+=`
     <tr>
       <td>${DISPLAY_NAMES[p]}</td>
-      <td>${p==="Lagna"?"":`<input type="checkbox" data-p="${p}" ${data[p].retro?"checked":""}>`}</td>
+	  
+      <td>${
+		  NON_RETRO_PLANETS.includes(p)
+			? ""
+			: `<input type="checkbox" data-p="${p}" ${data[p].retro?"checked":""}>`
+		}</td>
+
+	  
       <td><select data-p="${p}" data-t="sign"><option></option>${SIGNS.map(s=>`<option>${s}</option>`).join("")}</select></td>
       <td><select data-p="${p}" data-t="deg"><option></option>${Array.from({length:30},(_,i)=>`<option>${i}</option>`).join("")}</select></td>
       <td>${data[p].out||""}</td>
@@ -224,20 +583,45 @@ function buildPlanetTable(){
   });
 
   planetTable.querySelectorAll("input[type='checkbox']").forEach(chk=>{
-    chk.onchange=()=>{
-      data[chk.dataset.p].retro=chk.checked;
-      buildMatrix();
-    };
+    
+	chk.onchange=()=>{
+	  const p = chk.dataset.p;
+
+	  if(NON_RETRO_PLANETS.includes(p)){
+		data[p].retro = false;
+		chk.checked = false;
+		return;
+	  }
+
+	  data[p].retro = chk.checked;
+	  buildMatrix();
+	};
+
+	
+	
   });
 
   planetTable.querySelectorAll("select").forEach(sel=>{
     const p=sel.dataset.p;
     sel.value=data[p][sel.dataset.t==="sign"?"sign":"degree"];
     if(sel.dataset.t==="deg") sel.classList.toggle("deg-disabled",ignoreDegreesChk.checked);
+	
+	
     sel.onchange=()=>{
-      data[p][sel.dataset.t==="sign"?"sign":"degree"]=sel.value;
-      recalcOutputs();buildPlanetTable();buildMatrix();
-    };
+	  data[p][sel.dataset.t==="sign"?"sign":"degree"]=sel.value;
+
+	  if(p === "Lagna"){
+		manualLagnaOverride = false;
+	  }
+
+	  recalcOutputs();
+	  syncEffectiveLagnaDropdown();
+	  buildPlanetTable();
+	  buildMatrix();
+	};
+
+	
+	
   });
 }
 
@@ -246,7 +630,7 @@ function noteRow(isBad=false,rowIndex){
   <tr class="note-row ${isBad?'bad-row':''}">
     <td class="${isBad?'bad-label':''}">${isBad?'BAD':''}</td>
     <td></td>
-    ${COL_PLANETS.map((_,i)=>`
+    ${CURRENT_COL_PLANETS.map((_,i)=>`
       <td>
         <input class="note"
                data-note="${rowIndex}-${i}"
@@ -266,50 +650,275 @@ function collectNotes(){
   });
 }
 
-function buildMatrix(){
-  matrixTable.innerHTML="";
-  matrixTable.innerHTML+=noteRow(false,0);
 
-  const lords=LAGNA_LORDS[lagnaSelect.value];
+
+
+
+
+
+function isBadHouseForPlanet(colPlanet, house){
+  const out = data[colPlanet]?.out;
+  if(out == null) return false;
+
+  let badSet = [];
+
+  // SURYA, MARS, SHANI
+  if(["Sun","Mar","Sat"].includes(colPlanet)){
+    if([3,6,10,11].includes(out)){
+      badSet = [8];
+    }else if([1,2,4,5,7,8,9,12].includes(out)){
+      badSet = [2,6,8,12];
+    }
+  }
+
+    // RAHU & KETU (UPDATED RULE)
+  if(["Rah","Ket"].includes(colPlanet)){
+    if([2,3,6,7,9,11].includes(out)){
+      badSet = [8];
+    }else if([1,4,5,8,10,12].includes(out)){
+      badSet = [2,6,8,12];
+    }
+  }
+
+
+  // CHANDRA, GURU, BUDHA, VENUS (UPDATED RULE)
+	if(["Moo","Jup","Bud","Ven"].includes(colPlanet)){
+	  if([1,2,4,5,7,9,10].includes(out)){
+		badSet = [8];
+	  }else if([3,6,8,11,12].includes(out)){
+		badSet = [2,6,8,12];
+	  }
+	}
+
+  return badSet.includes(house);
+}
+
+
+
+
+
+function countBadHousesFromVisual(colPlanet){
+  let count = 0;
+
+  // column index in matrix (skip No + Lord columns)
+  const colIndex = CURRENT_COL_PLANETS.indexOf(colPlanet);
+  if(colIndex === -1) return 0;
+
+  // rows that contain actual house numbers (exclude note & gap rows)
+  const rows = matrixTable.querySelectorAll("tr");
+
+  rows.forEach(tr=>{
+    const tds = tr.querySelectorAll("td");
+    if(tds.length < colIndex + 3) return;
+
+    const cell = tds[colIndex + 2];
+    if(!cell) return;
+
+    const val = parseInt(cell.textContent.trim(), 10);
+    if(isNaN(val)) return;
+
+    if(isBadHouseForPlanet(colPlanet, val)){
+      count++;
+    }
+  });
+
+  return count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function countBadHousesForColumn(colPlanet){
+  let count = 0;
+
+  const lagnaForMatrix = manualLagnaOverride
+    ? lagnaSelect.value
+    : getEffectiveLagnaSign();
+
+  if(!lagnaForMatrix) return 0;
+
+  const baseLords = LAGNA_LORDS[lagnaForMatrix];
+  if(!baseLords) return 0;
+
+  // INCLUDE Rahu & Ketu AS NORMAL ROWS
+  const allRows = [...baseLords, "Rah", "Ket"];
+
+  allRows.forEach(rowPlanet=>{
+    
+
+ const house = getMatrixHouse(rowPlanet, colPlanet);
+if(house == null) return;
+
+	
+	
+	
+
+    if(isBadHouseForPlanet(colPlanet, house)) count++;
+  });
+
+  return count;
+}
+
+
+function buildMatrixHeader(){
+  const tr = document.getElementById("matrixHeader");
+  if(!tr) return;
+
+  // remove old planet headers
+  tr.querySelectorAll("th.planet-col").forEach(th=>th.remove());
+
+  CURRENT_COL_PLANETS.forEach(p=>{
+    const th = document.createElement("th");
+    th.className = "planet-col";
+    th.textContent = DISPLAY_NAMES[p] || p;
+    tr.appendChild(th);
+  });
+}
+
+
+
+
+
+
+
+
+
+
+function buildMatrix(){
+
+  let pivotPlanet = null;
+
+  if(lagnaBasedChk?.checked){
+    pivotPlanet = getStarLord("Lagna");
+  }
+
+  if(moonBasedChk?.checked){
+    pivotPlanet = getStarLord("Moo");
+  }
+
+  let COL_PLANETS;
+
+  if(pivotPlanet){
+    const idx = BASE_COL_PLANETS.indexOf(pivotPlanet);
+    if(idx >= 0){
+      COL_PLANETS = [
+        ...BASE_COL_PLANETS.slice(idx),
+        ...BASE_COL_PLANETS.slice(0, idx)
+      ];
+    }else{
+      COL_PLANETS = [...BASE_COL_PLANETS];
+    }
+  }else{
+    COL_PLANETS = [...BASE_COL_PLANETS];
+  }
+
+  CURRENT_COL_PLANETS = [...COL_PLANETS];
+  buildMatrixHeader();
+
+  matrixTable.innerHTML = "";
+
+  /* === BAD ROW FIRST (EXACTLY ABOVE DATA) === */
+  matrixTable.innerHTML += noteRow(true, 0);
+  matrixTable.innerHTML += `<tr class="gap-row"><td colspan="${CURRENT_COL_PLANETS.length + 2}"></td></tr>`;
+
+  const lagnaForMatrix = manualLagnaOverride
+    ? lagnaSelect.value
+    : getEffectiveLagnaSign();
+
+  const lords = LAGNA_LORDS[lagnaForMatrix];
+
+  if(!lords){
+    matrixTable.innerHTML += `
+      <tr><td colspan="${CURRENT_COL_PLANETS.length + 2}"></td></tr>
+    `;
+    return;
+  }
+
   lords.forEach((lord,i)=>{
     matrixTable.innerHTML+=`
     <tr>
       <td>${i+1}</td><td>${lord}</td>
       ${COL_PLANETS.map(col=>{
         if(lord===col) return `<td>${data[col].out||""}</td>`;
-        const a=absPos(lord),b=absPos(col);
-        if(a==null||b==null) return "<td></td>";
-        let diff=data[lord].retro?a-b:b-a;
-        if(diff<0) diff+=360;
-        return `<td>${calcHouse(diff)}</td>`;
+        const h = getMatrixHouse(lord, col);
+        return `<td>${h ?? ""}</td>`;
       }).join("")}
     </tr>`;
   });
 
-  matrixTable.innerHTML+=`<tr class="gap-row"><td colspan="11"></td></tr>`;
+  matrixTable.innerHTML+=`<tr class="gap-row"><td colspan="${CURRENT_COL_PLANETS.length + 2}"></td></tr>`;
 
   ["Rah","Ket"].forEach(r=>{
     matrixTable.innerHTML+=`
     <tr>
-      <td></td><td>${r}</td>
+      <td>${r === "Rah" ? 13 : 14}</td><td>${r}</td>
       ${COL_PLANETS.map(col=>{
         if(r===col) return `<td>${data[col].out||""}</td>`;
-        const a=absPos(r),b=absPos(col);
-        if(a==null||b==null) return "<td></td>";
-        let diff=data[r].retro?a-b:b-a;
-        if(diff<0) diff+=360;
-        return `<td>${calcHouse(diff)}</td>`;
+        const h = getMatrixHouse(r, col);
+        return `<td>${h ?? ""}</td>`;
       }).join("")}
     </tr>`;
   });
 
-  matrixTable.innerHTML+=`<tr class="gap-row"><td colspan="11"></td></tr>`;
-  matrixTable.innerHTML+=noteRow(false,1);
-  matrixTable.innerHTML+=noteRow(true,2);
+  /* === AUTO-FILL BAD COUNTS === */
+  const badInputs = matrixTable.querySelectorAll(
+    '.note-row.bad-row .note'
+  );
+
+  badInputs.forEach((inp,i)=>{
+    const colPlanet = CURRENT_COL_PLANETS[i];
+    if(!colPlanet) return;
+    inp.value = countBadHousesFromVisual(colPlanet);
+  });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ignoreDegreesChk.onchange=()=>{recalcOutputs();buildPlanetTable();buildMatrix();};
-lagnaSelect.onchange=buildMatrix;
+lagnaSelect.onchange=()=>{
+  manualLagnaOverride = true;
+  buildMatrix();
+};
+
+
+
+
+function syncEffectiveLagnaDropdown(){
+  if(manualLagnaOverride) return;
+
+  const eff = getEffectiveLagnaSign();
+  if(eff && lagnaSelect.value !== eff){
+    lagnaSelect.value = eff;
+  }
+}
+
+
+
+
+
 document.querySelectorAll('input[name="houseSys"]').forEach(r=>{
   r.onchange=e=>{
     houseSystem=e.target.value;
@@ -319,7 +928,15 @@ document.querySelectorAll('input[name="houseSys"]').forEach(r=>{
 
 document.getElementById("clearBtn").onclick=()=>{
   if(!confirm("Are you sure you want to clear the entire chart?")) return;
-  ALL_PLANETS.forEach(p=>data[p]={sign:"",degree:"",out:"",retro:(p==="Rah"||p==="Ket")});
+  
+  ALL_PLANETS.forEach(p=>data[p]={
+  sign:"",
+  degree:"",
+  out:"",
+  retro:(p==="Rah"||p==="Ket") ? true : false
+});
+
+
   notes=[];
   buildPlanetTable();
   matrixTable.innerHTML="";
@@ -352,6 +969,7 @@ fileInput.onchange=e=>{
     ignoreDegreesChk.checked=o.ignore;
     houseSystem=o.houseSystem;
     recalcOutputs();
+    syncEffectiveLagnaDropdown();
     buildPlanetTable();
     buildMatrix();
   };
@@ -361,35 +979,109 @@ fileInput.onchange=e=>{
 buildPlanetTable();
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+
+
+
+
+
+
+
 
 <script>
-document.getElementById("exportJPG").onclick = async () => {
-  const canvas = await html2canvas(document.body,{
-    backgroundColor:"#0f172a",
-    scale:2
-  });
-  const a=document.createElement("a");
-  a.href=canvas.toDataURL("image/jpeg",1.0);
-  a.download="astrology-chart.jpg";
-  a.click();
+const SWISS_PLANET_MAP = {
+  Surya: "Sun",
+  Chandra: "Moo",
+  Mangala: "Mar",
+  Budha: "Bud",
+  Jupiter: "Jup",
+  Saturn: "Sat",
+  Venus: "Ven",
+  Rahu: "Rah",
+  Ketu: "Ket"
 };
 
-document.getElementById("exportPDF").onclick = async () => {
-  const canvas = await html2canvas(document.body,{
-    backgroundColor:"#0f172a",
-    scale:2
-  });
-  const img=canvas.toDataURL("image/jpeg",1.0);
-  const { jsPDF } = window.jspdf;
-  const pdf=new jsPDF("p","mm","a4");
-  const w=pdf.internal.pageSize.getWidth();
-  const h=(canvas.height*w)/canvas.width;
-  pdf.addImage(img,"JPEG",0,0,w,h);
-  pdf.save("astrology-chart.pdf");
+function absToSignDeg(abs){
+  let a = abs % 360;
+  if(a < 0) a += 360;
+  const signIndex = Math.floor(a / 30);
+  const degree = Math.floor(a % 30);
+  return { sign: SIGNS[signIndex], degree };
+}
+
+document.getElementById("loadSwissBtn").onclick = () => {
+  document.getElementById("swissFileInput").value = "";
+  document.getElementById("swissFileInput").click();
+};
+
+document.getElementById("swissFileInput").onchange = e => {
+  const r = new FileReader();
+  r.onload = () => {
+    const swiss = JSON.parse(r.result);
+
+    // CLEAR OLD DATA
+    ALL_PLANETS.forEach(p=>{
+      data[p] = { sign:"", degree:"", out:"", retro:(p==="Rah"||p==="Ket") };
+    });
+
+    // LAGNA
+    if(typeof swiss.lagna === "number"){
+      const l = absToSignDeg(swiss.lagna);
+      data.Lagna.sign = l.sign;
+      data.Lagna.degree = l.degree;
+      lagnaSelect.value = l.sign;
+    }
+
+    // PLANETS
+    Object.keys(swiss.planets || {}).forEach(sp=>{
+      const tp = SWISS_PLANET_MAP[sp];
+      if(!tp) return;
+      const v = absToSignDeg(swiss.planets[sp]);
+      data[tp].sign = v.sign;
+      data[tp].degree = v.degree;
+    });
+	
+	
+	
+	// PLANET RETRO (IMPORT FROM SWISS)
+	Object.keys(swiss.planets_retro || {}).forEach(sp=>{
+	  const tp = SWISS_PLANET_MAP[sp];
+	  if(!tp) return;
+
+	  if(NON_RETRO_PLANETS.includes(tp)){
+		data[tp].retro = false;
+		return;
+	  }
+
+	  if(tp === "Rah" || tp === "Ket"){
+		data[tp].retro = true;
+		return;
+	  }
+
+	  data[tp].retro = !!swiss.planets_retro[sp];
+	});
+
+
+    // DEFAULTS
+    ignoreDegreesChk.checked = false;
+    houseSystem = "KP";
+    document.querySelector("input[value='KP']").checked = true;
+
+    recalcOutputs();
+    syncEffectiveLagnaDropdown();
+    buildPlanetTable();
+    buildMatrix();
+  };
+  r.readAsText(e.target.files[0]);
 };
 </script>
+
+
+
+
+
 
 </body>
 </html>
